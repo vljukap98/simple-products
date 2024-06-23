@@ -16,6 +16,7 @@ spring:
   #mvc:
   #  pathmatch:
   #    matching-strategy: ANT_PATH_MATCHER
-  #jackson:
-  #  date-format: yyyy-MM-dd HH:mm:ss
-  #  time-zone: UTC
+
+server:
+  servlet:
+    context-path: /simple-products/api

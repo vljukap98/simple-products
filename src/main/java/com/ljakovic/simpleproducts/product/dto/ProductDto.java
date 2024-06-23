@@ -1,38 +1,30 @@
-package com.ljakovic.simpleproducts.model;
+package com.ljakovic.simpleproducts.product.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "product")
-public class Product {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ProductDto {
 
-    @Id
     private Long id;
     @Size(min = 10, max = 10)
     @NotBlank
     private String code;
     @NotBlank
     private String name;
+    @Min(0)
+    @NotNull
     private BigDecimal priceEur;
     private BigDecimal priceUsd;
     private Boolean isAvailable;
 
-    public Product() {
-    }
-
-    public Product(Long id, String code, String name, BigDecimal priceEur, BigDecimal priceUsd, Boolean isAvailable) {
-        this.id = id;
-        this.code = code;
-        this.name = name;
-        this.priceEur = priceEur;
-        this.priceUsd = priceUsd;
-        this.isAvailable = isAvailable;
+    public ProductDto() {
+        //
     }
 
     public Long getId() {
