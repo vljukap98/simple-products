@@ -1,4 +1,4 @@
-package com.ljakovic.simple_products;
+package com.ljakovic.simpleproducts;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

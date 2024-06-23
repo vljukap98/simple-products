@@ -1,0 +1,27 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+    
+    <changeSet id="createProductTable" author="ljakovic">
+        <createTable tableName="product">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="code" type="CHAR(10)">
+                <constraints nullable="false" unique="true" checkConstraint="LENGTH(code) = 10" />
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="price_eur" type="double">
+                <constraints checkConstraint="price_eur >= 0" />
+            </column>
+            <column name="price_usd" type="double">
+                <constraints checkConstraint="price_usd >= 0" />
+            </column>
+            <column name="is_available" type="BOOLEAN" defaultValue="true" defaultValueBoolean="true" />
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

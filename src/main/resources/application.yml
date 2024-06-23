@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: simple-products
+  datasource:
+    url: jdbc:postgresql://localhost:5432/simple-products
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+  liquibase:
+    change-log: classpath:/db/database-changelog-master.xml
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  #mvc:
+  #  pathmatch:
+  #    matching-strategy: ANT_PATH_MATCHER
+  #jackson:
+  #  date-format: yyyy-MM-dd HH:mm:ss
+  #  time-zone: UTC
