@@ -13,9 +13,6 @@ spring:
       ddl-auto: none
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-  #mvc:
-  #  pathmatch:
-  #    matching-strategy: ANT_PATH_MATCHER
 
 server:
   servlet:
@@ -23,3 +20,6 @@ server:
 
 hnb:
   base-url: https://api.hnb.hr/tecajn-eur/v3
+
+api:
+  key: '49e75020-bec1-4b19-ad0c-6b47ec110b15'

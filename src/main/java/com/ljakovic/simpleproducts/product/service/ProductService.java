@@ -32,7 +32,7 @@ public class ProductService {
     private PriceCalculator priceCalculator;
 
     public ProductDto getProduct(Long id) {
-        Product product = productRepo.findById(id)
+        final Product product = productRepo.findById(id)
                 .orElseThrow(() ->
                      new EntityNotFoundException("Product with id: '" + id + "' not found")
                 );
@@ -40,9 +40,9 @@ public class ProductService {
     }
 
     public Page<ProductDto> getProducts(Pageable pageable) {
-        Page<Product> products = productRepo.findAll(pageable);
+        final Page<Product> products = productRepo.findAll(pageable);
 
-        List<ProductDto> productDtoList = products.stream()
+        final List<ProductDto> productDtoList = products.stream()
                 .map(productMapper::mapTo)
                 .toList();
 
