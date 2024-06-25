@@ -1,6 +1,7 @@
 package com.ljakovic.simpleproducts.exception;
 
 import com.ljakovic.simpleproducts.client.exception.HnbException;
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -46,6 +47,14 @@ public class ExceptionHandler {
         LOG.error(e.getMessage());
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage());
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler({EntityNotFoundException.class})
+    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException e) {
+        LOG.error(e.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
                 .body(e.getMessage());
     }
 
