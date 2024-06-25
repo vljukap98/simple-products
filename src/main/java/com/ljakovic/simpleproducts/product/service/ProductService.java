@@ -4,6 +4,8 @@ import com.ljakovic.simpleproducts.product.dto.ProductDto;
 import com.ljakovic.simpleproducts.product.mapper.ProductMapper;
 import com.ljakovic.simpleproducts.product.model.Product;
 import com.ljakovic.simpleproducts.product.repo.ProductRepository;
+import com.ljakovic.simpleproducts.util.CurrencyCode;
+import com.ljakovic.simpleproducts.util.PriceCalculator;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -25,10 +28,14 @@ public class ProductService {
     private ProductRepository productRepo;
     @Autowired
     private ProductMapper productMapper;
+    @Autowired
+    private PriceCalculator priceCalculator;
 
     public ProductDto getProduct(Long id) {
         Product product = productRepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Product with id: '" + id + "' not found"));
+                .orElseThrow(() ->
+                     new EntityNotFoundException("Product with id: '" + id + "' not found")
+                );
         return productMapper.mapTo(product);
     }
 
@@ -54,12 +61,14 @@ public class ProductService {
         product.setName(dto.getName());
         product.setPriceEur(dto.getPriceEur());
 
-        if (dto.getAvailable() != null) {
-            product.setAvailable(dto.getAvailable());
+        if (dto.isAvailable() != null) {
+            product.setAvailable(dto.isAvailable());
+        } else {
+            product.setAvailable(true);
         }
 
-        //TODO:call hnb service to calculate price usd
-        product.setPriceUsd(dto.getPriceEur());
+        final BigDecimal priceUsd = priceCalculator.calculatePrice(dto.getPriceEur(), CurrencyCode.USD_CURRENCY);
+        product.setPriceUsd(priceUsd);
 
         productRepo.save(product);
 

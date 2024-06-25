@@ -21,7 +21,7 @@ public class ProductDto {
     @NotNull
     private BigDecimal priceEur;
     private BigDecimal priceUsd;
-    private Boolean isAvailable;
+    private Boolean available;
 
     public ProductDto() {
         //
@@ -67,11 +67,11 @@ public class ProductDto {
         this.priceUsd = priceUsd;
     }
 
-    public Boolean getAvailable() {
-        return isAvailable;
+    public Boolean isAvailable() {
+        return available;
     }
 
     public void setAvailable(Boolean available) {
-        isAvailable = available;
+        this.available = available;
     }
 }

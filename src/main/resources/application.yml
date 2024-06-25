@@ -20,3 +20,6 @@ spring:
 server:
   servlet:
     context-path: /simple-products/api
+
+hnb:
+  base-url: https://api.hnb.hr/tecajn-eur/v3

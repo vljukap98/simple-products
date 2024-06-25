@@ -20,7 +20,7 @@ public class ProductMapper {
         }
 
         if (product.getPriceUsd() != null) {
-            dto.setPriceEur(product.getPriceUsd());
+            dto.setPriceUsd(product.getPriceUsd());
         }
 
         return dto;

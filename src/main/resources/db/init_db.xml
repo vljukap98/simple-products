@@ -21,7 +21,7 @@
             <column name="price_usd" type="double">
                 <constraints checkConstraint="price_usd >= 0" />
             </column>
-            <column name="is_available" type="BOOLEAN" defaultValue="true" defaultValueBoolean="true" />
+            <column name="is_available" type="BOOLEAN" />
         </createTable>
     </changeSet>
 </databaseChangeLog>
