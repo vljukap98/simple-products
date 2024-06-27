@@ -10,8 +10,12 @@ import java.math.BigDecimal;
 @Component
 public class PriceCalculator {
 
+    private final HnbClient hnbClient;
+
     @Autowired
-    private HnbClient hnbClient;
+    public PriceCalculator(HnbClient hnbClient) {
+        this.hnbClient = hnbClient;
+    }
 
     public BigDecimal calculatePrice(final BigDecimal priceEur, final String currency) {
         final HnbRateDto hnbRateDto = hnbClient.getRate(currency);

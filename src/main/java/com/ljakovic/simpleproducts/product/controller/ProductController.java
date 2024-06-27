@@ -3,8 +3,6 @@ package com.ljakovic.simpleproducts.product.controller;
 import com.ljakovic.simpleproducts.product.dto.ProductDto;
 import com.ljakovic.simpleproducts.product.service.ProductService;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,18 +25,23 @@ import static com.ljakovic.simpleproducts.util.SortPropertyUtil.PROPERTY_NAME;
 @RequestMapping("/v1/product")
 public class ProductController {
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
-    @GetMapping(
-            value = "/{id}",
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public ResponseEntity<ProductDto> getProduct(@PathVariable Long id) {
-        return ResponseEntity.ok(productService.getProduct(id));
+    @Autowired
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping(
+            value = "/{code}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<ProductDto> getProduct(@PathVariable String code) {
+        return ResponseEntity.ok(productService.getProductDto(code));
+    }
+
+    @GetMapping(
+            value = "/all",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<Page<ProductDto>> getProducts(
@@ -48,7 +51,7 @@ public class ProductController {
         Sort sort = Sort.by(Sort.Direction.ASC, PROPERTY_NAME);
         Pageable pageable = PageRequest.of(page > 0 ? page - 1 : page, size, sort);
 
-        return ResponseEntity.ok(productService.getProducts(pageable));
+        return ResponseEntity.ok(productService.getProductDtos(pageable));
     }
 
     @PostMapping(

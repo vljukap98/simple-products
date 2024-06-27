@@ -1,0 +1,18 @@
+############################## DB conf ##############################
+spring:
+  datasource:
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: sa
+  liquibase:
+    enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+hnb:
+  base-url: https://api.hnb.hr/tecajn-eur/v3
+
+api:
+  key: '49e75020-bec1-4b19-ad0c-6b47ec110b15'

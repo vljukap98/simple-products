@@ -26,6 +26,7 @@ public class HnbRateDto {
     private String currency;
 
     public HnbRateDto() {
+        //default constructor
     }
 
     public String getRateNumber() {

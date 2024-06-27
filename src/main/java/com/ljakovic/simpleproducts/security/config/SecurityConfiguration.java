@@ -27,10 +27,15 @@ public class SecurityConfiguration {
             "/swagger-ui/**"
     };
 
+    private final ApiKeyAuthFilter authFilter;
+    private final RequestAndResponseLoggingFilter reqResFilter;
+
     @Autowired
-    private ApiKeyAuthFilter authFilter;
-    @Autowired
-    private RequestAndResponseLoggingFilter reqResFilter;
+    public SecurityConfiguration(ApiKeyAuthFilter authFilter, RequestAndResponseLoggingFilter reqResFilter) {
+        this.authFilter = authFilter;
+        this.reqResFilter = reqResFilter;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http

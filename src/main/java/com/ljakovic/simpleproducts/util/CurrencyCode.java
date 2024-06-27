@@ -16,4 +16,5 @@ public class CurrencyCode {
     public static final String BAM_CURRENCY = "BAM";
     public static final String PLN_CURRENCY = "PLN";
 
+    private CurrencyCode() {}
 }

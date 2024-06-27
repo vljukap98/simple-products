@@ -26,7 +26,9 @@ import java.util.stream.Stream;
 @Component
 public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
 
-    private final static Logger log = LoggerFactory.getLogger(RequestAndResponseLoggingFilter.class);
+    private static final Logger log = LoggerFactory.getLogger(RequestAndResponseLoggingFilter.class);
+
+    private static final String PREFIX_HEADERNAME_HEADERVALUE_FORMAT = "%s %s: %s";
 
     private static final List<MediaType> VISIBLE_TYPES = Arrays.asList(
             MediaType.valueOf("text/*"),
@@ -81,7 +83,7 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
         StringBuilder msg = new StringBuilder();
 
         try {
-            beforeRequest(request, response, msg);
+            beforeRequest(request, msg);
             filterChain.doFilter(request, response);
         }
         finally {
@@ -95,7 +97,6 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
 
     protected void beforeRequest(
             ContentCachingRequestWrapper request,
-            ContentCachingResponseWrapper response,
             StringBuilder msg
     ) {
         if (enabled && log.isInfoEnabled()) {
@@ -128,10 +129,10 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
                         Collections.list(request.getHeaders(headerName))
                                 .forEach(headerValue -> {
                                     if(isSensitiveHeader(headerName)) {
-                                        msg.append(String.format("%s %s: %s", prefix, headerName, "*******")).append("\n");
+                                        msg.append(String.format(PREFIX_HEADERNAME_HEADERVALUE_FORMAT, prefix, headerName, "*******")).append("\n");
                                     }
                                     else {
-                                        msg.append(String.format("%s %s: %s", prefix, headerName, headerValue)).append("\n");
+                                        msg.append(String.format(PREFIX_HEADERNAME_HEADERVALUE_FORMAT, prefix, headerName, headerValue)).append("\n");
                                     }
                                 }));
         msg.append(prefix).append("\n");
@@ -153,10 +154,10 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
                                 .forEach(headerValue ->
                                 {
                                     if(isSensitiveHeader(headerName)) {
-                                        msg.append(String.format("%s %s: %s", prefix, headerName, "*******")).append("\n");
+                                        msg.append(String.format(PREFIX_HEADERNAME_HEADERVALUE_FORMAT, prefix, headerName, "*******")).append("\n");
                                     }
                                     else {
-                                        msg.append(String.format("%s %s: %s", prefix, headerName, headerValue)).append("\n");
+                                        msg.append(String.format(PREFIX_HEADERNAME_HEADERVALUE_FORMAT, prefix, headerName, headerValue)).append("\n");
                                     }
                                 }));
         msg.append(prefix).append("\n");
@@ -191,16 +192,16 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
     }
 
     private static ContentCachingRequestWrapper wrapRequest(HttpServletRequest request) {
-        if (request instanceof ContentCachingRequestWrapper) {
-            return (ContentCachingRequestWrapper) request;
+        if (request instanceof ContentCachingRequestWrapper contentCachingRequestWrapper) {
+            return contentCachingRequestWrapper;
         } else {
             return new ContentCachingRequestWrapper(request);
         }
     }
 
     private static ContentCachingResponseWrapper wrapResponse(HttpServletResponse response) {
-        if (response instanceof ContentCachingResponseWrapper) {
-            return (ContentCachingResponseWrapper) response;
+        if (response instanceof ContentCachingResponseWrapper contentCachingResponseWrapper) {
+            return contentCachingResponseWrapper;
         } else {
             return new ContentCachingResponseWrapper(response);
         }

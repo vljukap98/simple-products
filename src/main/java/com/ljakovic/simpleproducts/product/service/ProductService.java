@@ -24,23 +24,35 @@ public class ProductService {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProductService.class);
 
-    @Autowired
-    private ProductRepository productRepo;
-    @Autowired
-    private ProductMapper productMapper;
-    @Autowired
-    private PriceCalculator priceCalculator;
+    private final ProductRepository productRepo;
+    private final ProductMapper productMapper;
+    private final PriceCalculator priceCalculator;
 
-    public ProductDto getProduct(Long id) {
-        final Product product = productRepo.findById(id)
+    @Autowired
+    public ProductService(ProductRepository productRepo, ProductMapper productMapper, PriceCalculator priceCalculator) {
+        this.productRepo = productRepo;
+        this.productMapper = productMapper;
+        this.priceCalculator = priceCalculator;
+    }
+
+    public Product getProduct(final String code) {
+        return productRepo.findByCode(code)
                 .orElseThrow(() ->
-                     new EntityNotFoundException("Product with id: '" + id + "' not found")
+                        new EntityNotFoundException("Product with code: '" + code + "' not found")
                 );
+    }
+
+    public Page<Product> getProducts(final Pageable pageable) {
+        return productRepo.findAll(pageable);
+    }
+
+    public ProductDto getProductDto(final String code) {
+        final Product product = getProduct(code);
         return productMapper.mapTo(product);
     }
 
-    public Page<ProductDto> getProducts(Pageable pageable) {
-        final Page<Product> products = productRepo.findAll(pageable);
+    public Page<ProductDto> getProductDtos(final Pageable pageable) {
+        final Page<Product> products = getProducts(pageable);
 
         final List<ProductDto> productDtoList = products.stream()
                 .map(productMapper::mapTo)
@@ -49,7 +61,7 @@ public class ProductService {
         return new PageImpl<>(productDtoList, products.getPageable(), products.getTotalElements());
     }
 
-    public ProductDto createProduct(ProductDto dto) {
+    public ProductDto createProduct(final ProductDto dto) {
         if (Boolean.TRUE.equals(productRepo.existsByCode(dto.getCode()))) {
             LOG.info("Product with code: '{}' already exists", dto.getCode());
             throw new DataIntegrityViolationException("Product code not unique");
