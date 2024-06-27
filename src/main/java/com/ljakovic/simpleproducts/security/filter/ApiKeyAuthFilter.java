@@ -19,6 +19,16 @@ public class ApiKeyAuthFilter extends OncePerRequestFilter {
     @Value("${api.key}")
     private String apiKey;
 
+    /**
+     * Filters incoming HTTP requests to check for a valid API key
+     * If the API key is valid, sets the security context with the authentication token
+     *
+     * @param req The HttpServletRequest to be processed
+     * @param res The HttpServletResponse to be processed
+     * @param filterChain The FilterChain to pass the request and response to the next filter
+     * @throws ServletException If an exception occurs that interferes with the filter's normal operation
+     * @throws IOException If an input or output exception occurs
+     */
     @Override
     protected void doFilterInternal(
             final HttpServletRequest req,

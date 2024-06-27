@@ -72,7 +72,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/simple-products/api/v1/product/2",
+					"raw": "localhost:8080/simple-products/api/v1/product/1",
 					"host": [
 						"localhost"
 					],
@@ -82,7 +82,7 @@
 						"api",
 						"v1",
 						"product",
-						"2"
+						"1"
 					]
 				}
 			},
@@ -109,7 +109,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/simple-products/api/v1/product",
+					"raw": "localhost:8080/simple-products/api/v1/product/all",
 					"host": [
 						"localhost"
 					],
@@ -118,7 +118,8 @@
 						"simple-products",
 						"api",
 						"v1",
-						"product"
+						"product",
+						"all"
 					],
 					"query": [
 						{

@@ -7,6 +7,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductMapper {
 
+    /**
+     *
+     * Maps data from the Product object to ProductDto
+     *
+     * @param product Product entity object
+     * @return ProductDto
+     */
     public ProductDto mapTo(Product product) {
         ProductDto dto = new ProductDto();
 

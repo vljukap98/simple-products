@@ -36,6 +36,17 @@ public class SecurityConfiguration {
         this.reqResFilter = reqResFilter;
     }
 
+    /**
+     * Configures the security filter chain for the application
+     * Disables CSRF, CORS, and form login
+     * Configures authorization for specific URL patterns
+     * and sets the session management policy to stateless
+     * Adds custom filters to the security chain
+     *
+     * @param http The HttpSecurity to configure
+     * @return The configured SecurityFilterChain
+     * @throws Exception If an error occurs while building the security configuration
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http

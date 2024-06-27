@@ -67,7 +67,7 @@ public class ProductDto {
         this.priceUsd = priceUsd;
     }
 
-    public Boolean isAvailable() {
+    public Boolean getAvailable() {
         return available;
     }
 
