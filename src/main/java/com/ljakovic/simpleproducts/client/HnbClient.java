@@ -51,7 +51,8 @@ public class HnbClient {
      * @return HnbRateDto
      */
     public HnbRateDto getRate(final String currency) {
-        LOG.info("Get currency: {}", currency);
+        LOG.info("Get currency: {}",
+                baseUrl + "?valuta=" + currency);
         final HnbRateDto[] rates = restClient()
                 .get()
                 .uri(uriBuilder -> uriBuilder.queryParam(CURRENCY_QUERY_PARAM, currency)

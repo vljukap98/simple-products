@@ -34,9 +34,7 @@ public class ApiKeyAuthFilter extends OncePerRequestFilter {
                     Collections.emptyList()
             );
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            filterChain.doFilter(req, res);
-        } else {
-            res.setStatus(HttpStatus.UNAUTHORIZED.value());
         }
+        filterChain.doFilter(req, res);
     }
 }
