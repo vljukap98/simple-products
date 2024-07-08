@@ -10,7 +10,6 @@ import com.ljakovic.simpleproducts.util.PriceCalculator;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -26,13 +25,10 @@ public class ProductService {
     private static final Logger LOG = LoggerFactory.getLogger(ProductService.class);
 
     private final ProductRepository productRepo;
-    private final ProductMapper productMapper;
     private final PriceCalculator priceCalculator;
 
-    @Autowired
-    public ProductService(ProductRepository productRepo, ProductMapper productMapper, PriceCalculator priceCalculator) {
+    public ProductService(ProductRepository productRepo, PriceCalculator priceCalculator) {
         this.productRepo = productRepo;
-        this.productMapper = productMapper;
         this.priceCalculator = priceCalculator;
     }
 
@@ -70,7 +66,7 @@ public class ProductService {
      */
     public ProductDto getProductDto(final String code) {
         final Product product = getProduct(code);
-        return productMapper.mapTo(product);
+        return ProductMapper.mapTo(product);
     }
 
     /**
@@ -83,7 +79,7 @@ public class ProductService {
         final Page<Product> products = getProducts(pageable);
 
         final List<ProductDto> productDtoList = products.stream()
-                .map(productMapper::mapTo)
+                .map(ProductMapper::mapTo)
                 .toList();
 
         return new PageImpl<>(productDtoList, products.getPageable(), products.getTotalElements());
@@ -125,6 +121,6 @@ public class ProductService {
 
         productRepo.save(product);
 
-        return productMapper.mapTo(product);
+        return ProductMapper.mapTo(product);
     }
 }

@@ -3,7 +3,6 @@ package com.ljakovic.simpleproducts.product.controller;
 import com.ljakovic.simpleproducts.product.dto.ProductDto;
 import com.ljakovic.simpleproducts.product.service.ProductService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +26,6 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
     }

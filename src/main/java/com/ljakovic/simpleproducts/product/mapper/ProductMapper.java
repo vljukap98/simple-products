@@ -2,19 +2,12 @@ package com.ljakovic.simpleproducts.product.mapper;
 
 import com.ljakovic.simpleproducts.product.dto.ProductDto;
 import com.ljakovic.simpleproducts.product.model.Product;
-import org.springframework.stereotype.Component;
 
-@Component
 public class ProductMapper {
 
-    /**
-     *
-     * Maps data from the Product object to ProductDto
-     *
-     * @param product Product entity object
-     * @return ProductDto
-     */
-    public ProductDto mapTo(Product product) {
+    private ProductMapper() {}
+
+    public static ProductDto mapTo(Product product) {
         ProductDto dto = new ProductDto();
 
         dto.setId(product.getId());

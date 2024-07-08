@@ -2,7 +2,6 @@ package com.ljakovic.simpleproducts.security.config;
 
 import com.ljakovic.simpleproducts.rest.RequestAndResponseLoggingFilter;
 import com.ljakovic.simpleproducts.security.filter.ApiKeyAuthFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -30,7 +29,6 @@ public class SecurityConfiguration {
     private final ApiKeyAuthFilter authFilter;
     private final RequestAndResponseLoggingFilter reqResFilter;
 
-    @Autowired
     public SecurityConfiguration(ApiKeyAuthFilter authFilter, RequestAndResponseLoggingFilter reqResFilter) {
         this.authFilter = authFilter;
         this.reqResFilter = reqResFilter;
